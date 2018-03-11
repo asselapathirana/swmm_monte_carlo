@@ -1,0 +1,11 @@
+num_cpus: 1
+swmmResultCodes: [2, 0, 0]
+templatefile: "template.inp_"
+swmmouttype: [1, Calibrate a variable]
+datadirectory: "../data"
+tmpdirectory: "../tmp"
+cdfs: 
+- cdf1.dat
+- cdf2.dat
+nruns: 500
+

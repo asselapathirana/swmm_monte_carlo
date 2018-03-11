@@ -34,7 +34,7 @@ if __name__=='__main__':
     print ('You have {0:1d} CPUs'.format(np))
 
     # Nummber of points to use for the Pi estimation
-    n = 10000000
+    n = 10000003
     
     # iterable with a list of points to generate in each worker
     # each worker process gets n/np number of points to calculate Pi from

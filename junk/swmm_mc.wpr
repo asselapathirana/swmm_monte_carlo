@@ -4,7 +4,20 @@
 # Wing IDE project file                                          #
 ##################################################################
 [project attributes]
-proj.file-list = [loc('../src/montecarlo.py'),
+proj.directory-list = [{'dirloc': loc('../data'),
+                        'excludes': (),
+                        'filter': u'*',
+                        'include_hidden': False,
+                        'recursive': True,
+                        'watch_for_changes': True},
+                       {'dirloc': loc('../tmp'),
+                        'excludes': (),
+                        'filter': '*',
+                        'include_hidden': False,
+                        'recursive': True,
+                        'watch_for_changes': True}]
+proj.file-list = [loc('../run/param.yaml'),
+                  loc('../src/montecarlo.py'),
                   loc('../src/swmm_model.py')]
 proj.file-type = 'shared'
-proj.main-file = loc('../src/montecarlo.py')
+proj.main-file = loc('../src/swmm_model.py')
