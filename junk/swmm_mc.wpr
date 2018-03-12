@@ -16,7 +16,9 @@ proj.directory-list = [{'dirloc': loc('../data'),
                         'include_hidden': False,
                         'recursive': True,
                         'watch_for_changes': True}]
-proj.file-list = [loc('../run/param.yaml'),
+proj.file-list = [loc('../.gitignore'),
+                  loc('../README.coding.py'),
+                  loc('../run/param.yaml'),
                   loc('../src/montecarlo.py'),
                   loc('../src/swmm_model.py')]
 proj.file-type = 'shared'

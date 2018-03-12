@@ -6,8 +6,8 @@ Uses workers:
 http://docs.python.org/library/multiprocessing.html#module-multiprocessing.pool
 '''
 
-import random
 import multiprocessing
+import random
 from multiprocessing import Pool
 
 

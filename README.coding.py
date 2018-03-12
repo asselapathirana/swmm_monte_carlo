@@ -1,0 +1,2 @@
+autopep8 --in-place --aggressive --aggressive  -v <filename>
+isort -v -rc --atomic .

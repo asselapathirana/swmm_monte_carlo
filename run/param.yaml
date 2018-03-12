@@ -1,11 +1,12 @@
-num_cpus: 1
-swmmResultCodes: [2, 0, 0]
+num_cpus: 1  # keep this at num_cpus: 1 for debugging (no multithreading then)
+queuesize: 10
+swmmResultCodes: ['NODE', 'J3', 0] # 0 - depth of water above invert see https://pypi.python.org/pypi/SWMM5
 templatefile: "template.inp_"
 swmmouttype: [1, Calibrate a variable]
 datadirectory: "../data"
 tmpdirectory: "../tmp"
-cdfs: 
+cdfs: # make sure that there are enough cdfs to match the number of slots in the template file. 
 - cdf1.dat
 - cdf2.dat
-nruns: 500
+nruns: 40
 
