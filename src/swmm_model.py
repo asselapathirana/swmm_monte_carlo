@@ -315,24 +315,12 @@ def main_function():
     swmmea.setParams(parameters=parameters, display=True)
     # when testing run this in single thread. To do so, call .run directly.
     if __debug__:
-        print("Running single thread, good for debugging, but slow!")
+        print("Running without threading.")
         swmmea.run()
     else:
         swmmea.start()
         app.exec_()
 
-
-"""Following functions are for testing"""
-
-
-def evaluatorK(candidates, args):
-    fitness = []
-    for c in candidates:
-        f1 = sum([-10 * math.exp(-0.2 * math.sqrt(c[i]**2 + c[i + 1]**2))
-                  for i in range(len(c) - 1)])
-        f2 = sum([math.pow(abs(x), 0.8) + 5 * math.sin(x)**3 for x in c])
-        fitness.append(inspyred.ec.emo.Pareto([f1, f2]))
-    return fitness
 
 
 if __name__ == '__main__':
