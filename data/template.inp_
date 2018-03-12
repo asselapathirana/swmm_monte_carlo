@@ -52,8 +52,8 @@ RG1              INTENSITY 0:05     1.0      TIMESERIES Rain1
 [SUBCATCHMENTS]
 ;;Name           Rain Gage        Outlet           Area     %Imperv  Width    %Slope   CurbLen  SnowPack        
 ;;-------------- ---------------- ---------------- -------- -------- -------- -------- -------- ----------------
-C1               RG1              S1               50       50       1000     0.5      0                        
-C2               RG1              S2               500      50       2500     0.5      0                        
+C1               RG1              S1               50       @!v1!@       1000     0.5      0                        
+C2               RG1              S2               500      @!v2!@       2500     0.5      0                        
 
 [SUBAREAS]
 ;;Subcatchment   N-Imperv   N-Perv     S-Imperv   S-Perv     PctZero    RouteTo    PctRouted 
@@ -82,8 +82,8 @@ OF               0          FREE                        NO
 [STORAGE]
 ;;Name           Elev.    MaxDepth   InitDepth  Shape      Curve Name/Params            N/A      Fevap    Psi      Ksat     IMD     
 ;;-------------- -------- ---------- ----------- ---------- ---------------------------- -------- --------          -------- --------
-S1               2        1.5        0          FUNCTIONAL 322.0744933  0         0        0        0       
-S2               2        1.5        0          FUNCTIONAL 5435.83891078  0         0        0        0       
+S1               2        1.5        0          FUNCTIONAL 322.0  0         0        0        0       
+S2               2        1.5        0          FUNCTIONAL 5435.8  0         0        0        0       
 
 [CONDUITS]
 ;;Name           From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   
