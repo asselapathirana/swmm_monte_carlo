@@ -2,6 +2,7 @@
 # in wing ide: Project properties > Dubug/Execute > Python Options >
 # Custom > -O or -OO
 import errno
+import sys
 # import matplotlib
 # matplotlib.use('GTKAgg')
 # import matplotlib.pyplot as plt
@@ -50,6 +51,9 @@ class dumb(object):
 
 
 def _getSwmmValue(args):
+    if __debug__ : 
+        sys.stdout.write('.')
+        sys.stdout.flush()
     return getSwmmValue(*args)
 
 
@@ -265,14 +269,15 @@ class SwmmEA(QtCore.QThread):
             PARTS = parameters.queuesize
             part_count = parameters.nruns // parameters.num_cpus // PARTS
             pool = multiprocessing.Pool(
-                processes=parameters.num_cpus, maxtasksperchild=5)
+                processes=parameters.num_cpus)
 
             for n in range(part_count):
                 arguments = [f() for x in range(parameters.num_cpus * PARTS)]
                 r = pool.map(_getSwmmValue, arguments)
                 v = [max(f) for f in r]
                 results = np.append(results, v)
-
+            pool.close()
+            pool.join()
         print(results)
 
 
