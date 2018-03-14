@@ -2,6 +2,7 @@
 # in wing ide: Project properties > Dubug/Execute > Python Options >
 # Custom > -O or -OO
 import errno
+import threading
 import sys
 # import matplotlib
 # matplotlib.use('GTKAgg')
@@ -16,8 +17,9 @@ from random import Random, randint
 from time import sleep, time
 
 import numpy as np
+from scipy.stats import cumfreq
 import pyratemp
-from PyQt5 import QtCore, QtWidgets
+# from PyQt5 import QtCore, QtWidgets
 # from swmm5 import swmm5 as sw  # old
 # new # leave this both here until fully migrated to new swmm5 interface.
 from swmm5.swmm5tools import SWMM5Simulation
@@ -173,10 +175,11 @@ def err(e):
         print(e, "Error!")  # sw.ENgeterror(e,25)
 
 
-class SwmmEA(QtCore.QThread):
+class SwmmEA(threading.Thread):
+# class SwmmEA(QtCore.QThread):
 
-    def __init__(self):
-        QtCore.QThread.__init__(self)
+    #def __init__(self):
+        # QtCore.QThread.__init__(self)
 
     def log(self, logfile):
         import logging
@@ -271,11 +274,17 @@ class SwmmEA(QtCore.QThread):
             pool = multiprocessing.Pool(
                 processes=parameters.num_cpus)
 
+            with open(parameters.outputfile,'w') as file:
+                file.write('')
+
             for n in range(part_count):
                 arguments = [f() for x in range(parameters.num_cpus * PARTS)]
                 r = pool.map(_getSwmmValue, arguments)
                 v = [max(f) for f in r]
                 results = np.append(results, v)
+                with open(parameters.outputfile,'ab') as file:
+                    np.savetxt(file,v,fmt="%10.5f")
+                print('a')
             pool.close()
             pool.join()
         print(results)
@@ -307,21 +316,17 @@ def main_function():
     import os
     import multiprocessing
     multiprocessing.freeze_support()
-    # if ( len(sys.argv) > 1):
-    #    t=sys.argv[1]
-    # else:
+
     print("Working directory : %(n)s" % {"n": os.getcwd()})
-    # t=raw_input("Enter the name of parameter  file (*.yaml) : ")
-    # t=None
 
     parameters = ReadParameters()
-    app = QtWidgets.QApplication(sys.argv)
+    # app = QtWidgets.QApplication(sys.argv)
     swmmea = SwmmEA()
     swmmea.setParams(parameters=parameters, display=True)
     # when testing run this in single thread. To do so, call .run directly.
     if __debug__:
         print("Running without threading.")
-        swmmea.run()
+        swmmea.start()
     else:
         swmmea.start()
         app.exec_()

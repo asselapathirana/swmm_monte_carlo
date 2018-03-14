@@ -11,18 +11,18 @@ templatefile: "template.inp_" # template file name, swmm input file with each sl
 # e.g. if there are two cdfs, then variables v1 and v2 are available to be used. 
 # See https://www.simple-is-better.org/template/pyratemp.html#overview for information.  
 
-nruns: 20 # how many runs to be simulated. Please make sure that this number is a multiple of num_cpus*quequesize 
+nruns: 2000 # how many runs to be simulated. Please make sure that this number is a multiple of num_cpus*quequesize 
 # if not, the actual number of runs may be a bit less than nruns! (no harm done!)
 
 ## Performance related information 
-num_cpus: 2  # Number of processor cores you have is a good estimate for this (e.g. 4 for typical laptops). 
+num_cpus: 4  # Number of processor cores you have is a good estimate for this (e.g. 4 for typical laptops). 
 # keep this at num_cpus: 1 for debugging (no multithreading then)
 queuesize: 1 # How many simulations are fed into each process in the process pool 
 
 ## Other information 
 datadirectory: "../data" # directory with data (this is where template file should be)
 tmpdirectory: "../tmp"   # temporary storage. 
-
+outputfile: "../run/output.dat"
 ## optional inforamation 
 seed: 5 # set the seed to get repeatable results during testing. 
 #For real runs, its better to comment this (so that each time the programe starts with a different random seed)
