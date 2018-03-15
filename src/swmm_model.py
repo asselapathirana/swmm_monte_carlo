@@ -3,6 +3,7 @@
 # Custom > -O or -OO
 import errno
 import threading
+import subprocess
 import sys
 # import matplotlib
 # matplotlib.use('GTKAgg')
@@ -262,6 +263,16 @@ class SwmmEA(threading.Thread):
         def f():
             return [[c.getval(prng.random()) for c in self.cdfs],
                     self.linestring, self.parameters]
+   
+        with open(parameters.outputfile,'w') as file:
+            file.write('')
+            
+        try:
+            cmd=parameters.plotcmd
+            subprocess.Popen(cmd)            
+        except:
+            print("Could not run graphics ")
+
 
         if parameters.num_cpus == 1:
             for n in range(parameters.nruns):
@@ -274,8 +285,7 @@ class SwmmEA(threading.Thread):
             pool = multiprocessing.Pool(
                 processes=parameters.num_cpus)
 
-            with open(parameters.outputfile,'w') as file:
-                file.write('')
+
 
             for n in range(part_count):
                 arguments = [f() for x in range(parameters.num_cpus * PARTS)]

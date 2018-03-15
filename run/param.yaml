@@ -23,6 +23,7 @@ queuesize: 1 # How many simulations are fed into each process in the process poo
 datadirectory: "../data" # directory with data (this is where template file should be)
 tmpdirectory: "../tmp"   # temporary storage. 
 outputfile: "../run/output.dat"
+plotcmd: ["python", "../src/plotcdf.py"] # command to run the plotter. 
 ## optional inforamation 
 seed: 5 # set the seed to get repeatable results during testing. 
 #For real runs, its better to comment this (so that each time the programe starts with a different random seed)
