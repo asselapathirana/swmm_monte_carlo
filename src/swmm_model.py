@@ -1,10 +1,10 @@
+
+# from PyQt5 import QtCore, QtWidgets
+# from swmm5 import swmm5 as sw  # old
+import errno
 # run python with -O to get 'debug' behavior (single thread etc.)
 # in wing ide: Project properties > Dubug/Execute > Python Options >
 # Custom > -O or -OO
-import errno
-import threading
-import subprocess
-import sys
 # import matplotlib
 # matplotlib.use('GTKAgg')
 # import matplotlib.pyplot as plt
@@ -12,16 +12,16 @@ import math
 import multiprocessing
 import os
 import shutil
+import subprocess
 import sys
+import threading
 import traceback
 from random import Random, randint
 from time import sleep, time
 
 import numpy as np
-from scipy.stats import cumfreq
 import pyratemp
-# from PyQt5 import QtCore, QtWidgets
-# from swmm5 import swmm5 as sw  # old
+from scipy.stats import cumfreq
 # new # leave this both here until fully migrated to new swmm5 interface.
 from swmm5.swmm5tools import SWMM5Simulation
 
@@ -54,7 +54,7 @@ class dumb(object):
 
 
 def _getSwmmValue(args):
-    if __debug__ : 
+    if __debug__:
         sys.stdout.write('.')
         sys.stdout.flush()
     return getSwmmValue(*args)
@@ -113,7 +113,7 @@ def swmmCost(fillers, linestring, outfile, parameters):
 
 
 def swmmRun(swmminputfile, parameters):
-    st=SWMM5Simulation(swmminputfile, clean=True)
+    st = SWMM5Simulation(swmminputfile, clean=True)
     results = np.array(list(st.Results(*parameters.swmmResultCodes)))
     return results
 
@@ -177,9 +177,9 @@ def err(e):
 
 
 class SwmmEA(threading.Thread):
-# class SwmmEA(QtCore.QThread):
+    # class SwmmEA(QtCore.QThread):
 
-    #def __init__(self):
+    # def __init__(self):
         # QtCore.QThread.__init__(self)
 
     def log(self, logfile):
@@ -263,16 +263,16 @@ class SwmmEA(threading.Thread):
         def f():
             return [[c.getval(prng.random()) for c in self.cdfs],
                     self.linestring, self.parameters]
-   
-        with open(parameters.outputfile,'w') as file:
-            file.write('')
-            
-        try:
-            cmd=parameters.plotcmd
-            subprocess.Popen(cmd)            
-        except:
-            print("Could not run graphics ")
 
+        with open(parameters.outputfile, 'w') as file:
+            file.write('')
+
+        try:
+            cmd = parameters.plotcmd
+            cmd.extend(parameters.dist_names)
+            subprocess.Popen(cmd)
+        except BaseException:
+            print("Could not run graphics ")
 
         if parameters.num_cpus == 1:
             for n in range(parameters.nruns):
@@ -285,16 +285,15 @@ class SwmmEA(threading.Thread):
             pool = multiprocessing.Pool(
                 processes=parameters.num_cpus)
 
-
-
             for n in range(part_count):
                 arguments = [f() for x in range(parameters.num_cpus * PARTS)]
                 r = pool.map(_getSwmmValue, arguments)
                 v = [max(f) for f in r]
                 results = np.append(results, v)
-                with open(parameters.outputfile,'ab') as file:
-                    np.savetxt(file,v,fmt="%10.5f")
-                print('a')
+                with open(parameters.outputfile, 'ab') as file:
+                    np.savetxt(file, v, fmt="%10.5f")
+                sys.stdout.write('|')
+                sys.stdout.flush()
             pool.close()
             pool.join()
         print(results)
@@ -336,11 +335,9 @@ def main_function():
     # when testing run this in single thread. To do so, call .run directly.
     if __debug__:
         print("Running without threading.")
-        swmmea.start()
+        swmmea.run()
     else:
         swmmea.start()
-        app.exec_()
-
 
 
 if __name__ == '__main__':

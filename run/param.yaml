@@ -25,6 +25,6 @@ tmpdirectory: "../tmp"   # temporary storage.
 outputfile: "../run/output.dat"
 plotcmd: ["python", "../src/plotcdf.py"] # command to run the plotter. 
 ## optional inforamation 
-seed: 5 # set the seed to get repeatable results during testing. 
+# seed: 5 # set the seed to get repeatable results during testing. 
 #For real runs, its better to comment this (so that each time the programe starts with a different random seed)
-
+dist_names: ['beta', 'norm',] # https://docs.scipy.org/doc/scipy/reference/stats.html#continuous-distributions for possible values. 

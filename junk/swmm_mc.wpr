@@ -5,15 +5,17 @@
 ##################################################################
 [project attributes]
 proj.directory-list = [{'dirloc': loc('..'),
-                        'excludes': (),
-                        'filter': u'*',
+                        'excludes': [u'README.coding.py'],
+                        'filter': '*',
                         'include_hidden': False,
                         'recursive': True,
                         'watch_for_changes': True}]
 proj.file-list = [loc('../.gitignore'),
-                  loc('../README.coding.py'),
                   loc('../run/param.yaml'),
                   loc('../src/montecarlo.py'),
                   loc('../src/swmm_model.py')]
 proj.file-type = 'shared'
+proj.launch-config = {loc('../src/plotcdf.py'): ('project',
+        (u'gamma lognorm',
+         ''))}
 proj.main-file = loc('../src/swmm_model.py')
