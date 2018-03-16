@@ -269,6 +269,7 @@ class SwmmEA(threading.Thread):
 
         try:
             cmd = parameters.plotcmd
+            cmd.append(parameters.outputfile)
             cmd.extend(parameters.dist_names)
             subprocess.Popen(cmd)
         except BaseException:

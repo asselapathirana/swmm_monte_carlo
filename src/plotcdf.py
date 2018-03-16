@@ -22,7 +22,8 @@ ln2, = ax2.plot([], [], '')
 ln, = ax.plot([], [], 'ro')
 ln3 = []
 
-dist_names = sys.argv[1:]
+dist_names = sys.argv[2:]
+outputfile = sys.argv[1]
 
 for dist_name in dist_names:
     dist = getattr(scipy.stats, dist_name)
@@ -39,7 +40,7 @@ def init():
 def update(frame):
 
     try:
-        data = np.loadtxt("../run/output.dat")
+        data = np.loadtxt(outputfile)
         X2 = np.sort(data)
         N = len(X2)
         ax.set_xlim(X2[0], X2[-1])
